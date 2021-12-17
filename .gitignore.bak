@@ -3,5 +3,3 @@ Azure_Board.db
 debug_use.py
 extract_db.py
 azure_free.py
-.idea
-__pycache__
