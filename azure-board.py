@@ -12,6 +12,8 @@ import re
 import sqlite3
 from decouple import config
 from az_sql_db import create_db
+from pathlib import Path
+
 
 # Set Organization and Personal Access Token
 organization = "https://dev.azure.com/pursuitsoftwaredev"
@@ -31,9 +33,11 @@ project_names = []
 projects = requests.get(url="https://dev.azure.com/pursuitsoftwaredev/_apis/projects?api-version=5.1", headers=headers).json()
 for item in projects['value']:
     project_names.append(item['name'])
+my_file = Path("Azure_Board.db")
+if not my_file.is_file():
+    # Create the Database
+    create_db()
 
-# Create the Database
-create_db()
 # noinspection SpellCheckingInspection
 CLEANR = re.compile('<.*?>')
 
