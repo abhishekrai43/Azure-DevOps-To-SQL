@@ -11,6 +11,7 @@ import base64
 import re
 import sqlite3
 from decouple import config
+from az_sql_db import create_db
 
 # Set Organization and Personal Access Token
 organization = "https://dev.azure.com/pursuitsoftwaredev"
@@ -31,6 +32,8 @@ projects = requests.get(url="https://dev.azure.com/pursuitsoftwaredev/_apis/proj
 for item in projects['value']:
     project_names.append(item['name'])
 
+# Create the Database
+create_db()
 # noinspection SpellCheckingInspection
 CLEANR = re.compile('<.*?>')
 
