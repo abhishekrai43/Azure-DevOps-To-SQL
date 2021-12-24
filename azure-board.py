@@ -43,12 +43,16 @@ CLEANR = re.compile('<.*?>')
 
 # noinspection SpellCheckingInspection
 # Remove HTML Tags from Description
+
+
 def cleanhtml(raw_html):
     cleantext = re.sub(CLEANR, '', raw_html)
     return str(cleantext)
 
 # noinspection SpellCheckingInspection
 # Get Work Item Details
+
+
 def widet(resp, table, id):
     # Work Item Title
     wi_title = resp['value'][0]['fields']['System.Title']['newValue']
