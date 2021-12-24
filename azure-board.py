@@ -52,39 +52,39 @@ def cleanhtml(raw_html):
 def widet(resp, table, id):
     # Work Item Title
     wi_title = resp['value'][0]['fields']['System.Title']['newValue']
-    # print("Title :",wi_title)
+    
     # Created On
     created_on = resp['value'][0]['fields']['System.CreatedDate']['newValue']
-    # print("Created on :",created_on)
+    
     # Name
     wi_name = resp['value'][0]['revisedBy']['displayName']
-    # print("Name :",wi_name)
+    
     # Email Address
     wi_email = resp['value'][0]['revisedBy']['name']
-    # print("Email :",wi_email)
+    
     # WI State
     wi_state = resp['value'][0]['fields']['System.State']['newValue']
-    # print(wi_state)
+    
     # WI Reason
     wi_reason = resp['value'][0]['fields']['System.Reason']['newValue']
-    # print(wi_reason)
+    
     # WI Area
     wi_area = resp['value'][0]['fields']['System.AreaPath']['newValue']
-    # print(wi_area)
+    
     # WI Iteration
     wi_iteration = resp['value'][0]['fields']['System.IterationPath']['newValue']
-    # print("Iteration :",wi_iteration)
+    
     # WI Comments
     comments = resp['value'][0]['fields']['System.CommentCount']['newValue']
-    # print("Comments :",comments)
+    
     # WI Priority
     priority = resp['value'][0]['fields']['Microsoft.VSTS.Common.Priority']['newValue']
-    # print("Priority :",priority)
+    
     # WI Value Area
 
     try:
         wi_val_area = resp['value'][0]['fields']['Microsoft.VSTS.Common.ValueArea']['newValue']
-        # print("Value Area :",wi_val_area)
+        
     except:
         wi_val_area = ''
 
@@ -92,7 +92,7 @@ def widet(resp, table, id):
     try:
         wi_description = resp['value'][0]['fields']['System.Description']['newValue']
         clean_desc = cleanhtml(wi_description)
-        # print(" Description :\n",clean_desc)
+        
     except:
         wi_description = ''
     connection = sqlite3.connect("Azure_Board.db")
@@ -108,7 +108,7 @@ def widet(resp, table, id):
             clean_tsteps = clean_tsteps.replace(unw, '')
 
         auto_stat = resp['value'][0]['fields']['Microsoft.VSTS.TCM.AutomationStatus']['newValue']
-        # print(auto_stat)
+        
         sql_command = f"INSERT INTO {table} (workItemId,System_Title,displayName,name,revisedDate,System_State,System_Reason,System_AreaPath,System_IterationPath,Microsoft_VSTS_Common_Priority,Microsoft_VSTS_Common_ValueArea, Steps, Automation) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);"
         data_tuple = (id ,wi_title, wi_name, wi_email, created_on, wi_state, wi_reason, wi_area, wi_iteration, priority, wi_val_area, clean_tsteps, auto_stat)
         crsr.execute(sql_command, data_tuple)
@@ -118,7 +118,7 @@ def widet(resp, table, id):
         try:
             wi_description = resp['value'][0]['fields']['System.Description']['newValue']
             clean_desc = cleanhtml(wi_description)
-            # print(" Description :\n",clean_desc)
+            
         except:
             clean_desc = ''
         sql_command = f"INSERT INTO {table} (workItemId,System_Title,displayName,name,revisedDate,System_State,System_Reason,System_AreaPath,System_IterationPath,Microsoft_VSTS_Common_Priority,System_Description) VALUES (?,?,?,?,?,?,?,?,?,?,?);"
@@ -138,14 +138,14 @@ def widet(resp, table, id):
         try:
             wi_criteria = resp['value'][0]['fields']['Microsoft.VSTS.Common.AcceptanceCriteria']['newValue']
             clean_crit = cleanhtml(wi_criteria)
-            #print("Criteria :\n", clean_crit)
+        
         except:
             clean_crit = ''
         # WI Description
         try:
             wi_description = resp['value'][0]['fields']['System.Description']['newValue']
             clean_desc = cleanhtml(wi_description)
-            # print(" Description :\n",clean_desc)
+            
         except:
             clean_desc = ''
         sql_command = f"INSERT INTO {table} (workItemId,System_Title,displayName,name,revisedDate,System_State,System_Reason,System_AreaPath,System_IterationPath,Microsoft_VSTS_Common_Priority,Microsoft_VSTS_Common_ValueArea,Story_Points,Requirement_ID,Microsoft_VSTS_Common_AcceptanceCriteria,System_Description) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
@@ -155,18 +155,18 @@ def widet(resp, table, id):
     elif table == 'Bug':
         # Bug Severity
         b_severity = resp['value'][0]['fields']['Microsoft.VSTS.Common.Severity']['newValue']
-        #print("Severity :", b_severity)
+    
         # Defect ID
         try:
             def_id = resp['value'][0]['fields']['Custom.qTestDefect_Id']['newValue']
-            #print("Def_ID :", def_id)
+        
         except:
             def_id = ''
         # Repro Steps
         try:
             wi_repr = resp['value'][0]['fields']['Microsoft.VSTS.TCM.ReproSteps']['newValue']
             clean_repr = cleanhtml(wi_repr)
-            #print("Repro Steps :\n", clean_repr)
+        
         except:
             clean_repr = ''
         sql_command = f"INSERT INTO {table} (workItemId,System_Title,displayName,name,revisedDate,System_State,System_Reason,System_AreaPath,System_IterationPath,Microsoft_VSTS_Common_Priority,Microsoft_VSTS_Common_Severity,Defect_ID,Microsoft_VSTS_TCM_ReproSteps,System_Description) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
@@ -179,14 +179,14 @@ def widet(resp, table, id):
         try:
             wi_description = resp['value'][0]['fields']['System.Description']['newValue']
             clean_desc = cleanhtml(wi_description)
-           # print(" Description :\n", clean_desc)
+           
         except:
             clean_desc = ''
         # Acceptance Criteria
         try:
             wi_criteria = resp['value'][0]['fields']['Microsoft.VSTS.Common.AcceptanceCriteria']['newValue']
             clean_crit = cleanhtml(wi_criteria)
-            #print("Criteria :\n", clean_crit)
+        
         except:
             clean_crit = ''
         sql_command = f"INSERT INTO {table} (workItemId,System_Title,displayName,name,revisedDate,System_State,System_Reason,System_AreaPath,System_IterationPath,Microsoft_VSTS_Common_Priority,Microsoft_VSTS_Common_ValueArea,System_Description, Microsoft_VSTS_Common_AcceptanceCriteria) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);"
@@ -199,7 +199,7 @@ def widet(resp, table, id):
         try:
             wi_description = resp['value'][0]['fields']['System.Description']['newValue']
             clean_desc = cleanhtml(wi_description)
-            #print(" Description :\n", clean_desc)
+        
         except:
             clean_desc = ''
         # Acceptance Criteria
@@ -213,7 +213,7 @@ def widet(resp, table, id):
         try:
             wi_description = resp['value'][0]['fields']['System.Description']['newValue']
             clean_desc = cleanhtml(wi_description)
-            #print(" Description :\n", clean_desc)
+        
         except:
             clean_desc = ''
 
@@ -228,14 +228,14 @@ def widet(resp, table, id):
         try:
             wi_description = resp['value'][0]['fields']['System.Description']['newValue']
             clean_desc = cleanhtml(wi_description)
-            #print(" Description :\n", clean_desc)
+        
         except:
             clean_desc = ''
         # Acceptance Criteria
         try:
             wi_criteria = resp['value'][0]['fields']['Microsoft.VSTS.Common.AcceptanceCriteria']['newValue']
             clean_crit = cleanhtml(wi_criteria)
-            print("Criteria :\n", clean_crit)
+    
         except:
             clean_crit = ''
         try:
@@ -322,8 +322,8 @@ for project in project_names:
         response = requests.get(f'https://dev.azure.com/pursuitsoftwaredev/{project}/_apis/wit/workItems/{wid}/updates?api-version=6.0', headers=headers).json()
         # Work Item Type
         wi_type = response['value'][0]['fields']['System.WorkItemType']['newValue']
-        print("Work Item Type :", wi_type)
-        print("Work Item ID :", wid)
+
+
         if wi_type == 'Test Case':
             tab = 'TestCase'
             widet(response, tab, wid)
