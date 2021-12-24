@@ -1,5 +1,6 @@
 import sqlite3
 
+
 def create_db():
     # Create Database
     connection = sqlite3.connect("Azure_Board.db")
