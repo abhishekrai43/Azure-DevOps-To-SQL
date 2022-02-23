@@ -51,8 +51,6 @@ def cleanhtml(raw_html):
 
 # noinspection SpellCheckingInspection
 # Get Work Item Details
-
-
 def widet(resp, table, id):
     # Work Item Title
     wi_title = resp['value'][0]['fields']['System.Title']['newValue']
