@@ -28,7 +28,7 @@ headers = {
     'Authorization': 'Basic '+authorization
 }
 project_names = []
-# Get Project Names
+# Get Project Names All
 
 projects = requests.get(url="https://dev.azure.com/pursuitsoftwaredev/_apis/projects?api-version=5.1", headers=headers).json()
 for item in projects['value']:
