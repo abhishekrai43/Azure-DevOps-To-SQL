@@ -1,8 +1,6 @@
 # Author:- Abhishek Rai
 # Env:- Python 3.9.0
-# Designation:- Quality Engineer
-# Date:-25-11-2021
-# email:- abhishek_r@pursuitsoftware.biz
+
 
 # Import Libraries
 import json
